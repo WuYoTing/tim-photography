@@ -31,7 +31,7 @@ const photos = (await getCollection("photos", (p) => p.data.category === categor
 const ogImage = photos[0] ? await getOgImagePath(photos[0].data.image) : undefined;
 
 const categoryLabel = pickLocalized(category.label, locale);
-const title = `${categoryLabel} — Wu You Ting Photography`;
+const title = `${categoryLabel} — Tim Photography`;
 const description = pickLocalized(category.description, locale);
 ---
 

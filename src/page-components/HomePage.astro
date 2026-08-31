@@ -21,7 +21,7 @@ const hero = featured[0] ?? allPhotos[0];
 const title = `${siteConfig.name} — ${pickLocalized(siteConfig.tagline, locale)}`;
 const descriptionByLocale: Record<Locale, string> = {
   en: `${siteConfig.name}, a photographer based in ${siteConfig.location}.`,
-  "zh-tw": `吳侑庭,一位在台北的攝影師。`,
+  "zh-tw": `Tim,一位在台北的攝影師。`,
 };
 const description = descriptionByLocale[locale];
 const ogImage = hero ? await getOgImagePath(hero.data.image) : undefined;

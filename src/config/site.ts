@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "Wu You Ting",
+  name: "Tim",
   tagline: {
     en: "Photographer",
     "zh-TW": "攝影師",

@@ -29,7 +29,7 @@
     "heading": "About",
     "gearHeading": "Gear I shoot with",
     "gearText": "I usually shoot with a Sony A7M3 paired with a Tamron 28-200mm or a Sony 85mm F1.8.",
-    "bioParagraph1": "I'm Wu You Ting, a photographer based in Taipei, Taiwan.",
+    "bioParagraph1": "I'm Tim, a photographer based in Taipei, Taiwan.",
     "bioParagraph2": "I like capturing the moments I come across, especially while traveling — a look, a gesture, a bit of light in an unfamiliar place.",
     "bioParagraph3": "If you'd like to work together, I'd love to hear from you."
   },
@@ -57,7 +57,7 @@
     "prev": "Previous photo"
   },
   "footer": {
-    "copyright": "© {year} Wu You Ting",
+    "copyright": "© {year} Tim",
     "contactLink": "Get in touch"
   }
 }

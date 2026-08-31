@@ -23,8 +23,8 @@ const allPhotos = (await getCollection("photos")).sort((a, b) => a.data.order - 
 const ogImage = allPhotos[0] ? await getOgImagePath(allPhotos[0].data.image) : undefined;
 
 const titleByLocale: Record<Locale, string> = {
-  en: "Portfolio — Wu You Ting Photography",
-  "zh-tw": "作品集 — Wu You Ting Photography",
+  en: "Portfolio — Tim Photography",
+  "zh-tw": "作品集 — Tim Photography",
 };
 const descriptionByLocale: Record<Locale, string> = {
   en: "Browse the full photography portfolio by category: travel, portrait and art.",
