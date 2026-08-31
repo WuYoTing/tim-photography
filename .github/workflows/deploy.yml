@@ -44,7 +44,7 @@ jobs:
           staticDistDir: dist
           urls: |
             /index.html
-            /portfolio/portrait/index.html
+            /portfolio/travel/index.html
           uploadArtifacts: true
           temporaryPublicStorage: true
           configPath: ./lighthouserc.json

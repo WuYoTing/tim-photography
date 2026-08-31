@@ -1,14 +1,13 @@
 ---
 title:
-  en: "Dadaocheng Fireworks — Slow Sync III"
-  zh-TW: "大稻埕煙火 — 慢速同步 III"
+  en: "Trumpet Under City Lights"
+  zh-TW: "城市燈光下的小號手"
 slug: "portrait-3"
 category: "portrait"
-image: "../../../assets/photos/portrait/portrait-3.jpg"
+image: "../../../assets/photos/portrait/DSC05299.jpg"
 alt:
-  en: "Placeholder portrait photo 3, to be replaced with a real photograph"
-  zh-TW: "佔位人像照片 3,待替換為真實作品"
-featured: true
-date: 2026-08-02
+  en: "A man playing the trumpet at night, framed by warm bokeh lights"
+  zh-TW: "男子在夜晚吹奏小號,背景是溫暖的散景燈光"
+featured: false
 order: 3
 ---

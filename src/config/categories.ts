@@ -12,27 +12,27 @@ export interface Category {
 
 export const categories: Category[] = [
   {
+    slug: "travel",
+    label: { en: "Travel", "zh-TW": "旅拍" },
+    description: {
+      en: "Photos from recent trips — people, places, and moments along the way.",
+      "zh-TW": "旅途中拍下的作品,收錄遇到的人物、風景與片刻。",
+    },
+  },
+  {
     slug: "portrait",
-    label: { en: "Portrait", "zh-TW": "人像" },
+    label: { en: "Portrait", "zh-TW": "人物" },
     description: {
-      en: "Portrait sessions, including the Dadaocheng Fireworks slow sync flash series.",
-      "zh-TW": "人像作品,包含大稻埕煙火節慢速同步閃燈系列。",
+      en: "Live performers and portraits caught mid-moment on stage and off.",
+      "zh-TW": "舞台上與日常間捕捉到的人物與表演者神情。",
     },
   },
   {
-    slug: "event",
-    label: { en: "Event", "zh-TW": "活動紀實" },
+    slug: "art",
+    label: { en: "Art", "zh-TW": "藝文紀實" },
     description: {
-      en: "Event documentation. More coming soon.",
-      "zh-TW": "活動紀實,內容陸續更新中。",
-    },
-  },
-  {
-    slug: "still",
-    label: { en: "Still", "zh-TW": "劇照" },
-    description: {
-      en: "Stills. More coming soon.",
-      "zh-TW": "劇照作品,內容陸續更新中。",
+      en: "Gallery visits, exhibitions, and quiet compositions from art spaces.",
+      "zh-TW": "美術館、展覽與藝文空間中的觀展片刻與構圖。",
     },
   },
 ];

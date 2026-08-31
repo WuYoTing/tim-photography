@@ -12,7 +12,7 @@ const photos = defineCollection({
     z.object({
       title: localizedText,
       slug: z.string(),
-      category: z.enum(["portrait", "event", "still"]),
+      category: z.enum(["travel", "portrait", "art"]),
       image: image(),
       alt: localizedText,
       featured: z.boolean().default(false),

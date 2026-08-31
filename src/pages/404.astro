@@ -8,6 +8,7 @@ import zhTw from "../i18n/zh-tw.json";
 
 const allPhotos = (await getCollection("photos")).sort((a, b) => a.data.order - b.data.order);
 const photo = allPhotos.find((p) => p.data.featured) ?? allPhotos[0];
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <!doctype html>
@@ -15,7 +16,7 @@ const photo = allPhotos.find((p) => p.data.featured) ?? allPhotos[0];
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <title>404 — {siteConfig.name}</title>
     <meta name="description" content="Page not found." />
     <script is:inline>
@@ -25,7 +26,7 @@ const photo = allPhotos.find((p) => p.data.featured) ?? allPhotos[0];
           stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
         document.documentElement.setAttribute("data-theme", theme);
 
-        if (window.location.pathname.indexOf("/zh-tw") === 0) {
+        if (/\/zh-tw(\/|$)/.test(window.location.pathname)) {
           document.documentElement.lang = "zh-TW";
         }
       })();
@@ -48,8 +49,8 @@ const photo = allPhotos.find((p) => p.data.featured) ?? allPhotos[0];
         <h1>{en.notFound.heading}</h1>
         <p>{en.notFound.text}</p>
         <div class="not-found-actions">
-          <a href="/">{en.notFound.backHome}</a>
-          <a href="/portfolio">{en.notFound.backPortfolio}</a>
+          <a href={`${base}/`}>{en.notFound.backHome}</a>
+          <a href={`${base}/portfolio`}>{en.notFound.backPortfolio}</a>
         </div>
       </div>
 
@@ -57,14 +58,14 @@ const photo = allPhotos.find((p) => p.data.featured) ?? allPhotos[0];
         <h1>{zhTw.notFound.heading}</h1>
         <p>{zhTw.notFound.text}</p>
         <div class="not-found-actions">
-          <a href="/zh-tw/">{zhTw.notFound.backHome}</a>
-          <a href="/zh-tw/portfolio">{zhTw.notFound.backPortfolio}</a>
+          <a href={`${base}/zh-tw/`}>{zhTw.notFound.backHome}</a>
+          <a href={`${base}/zh-tw/portfolio`}>{zhTw.notFound.backPortfolio}</a>
         </div>
       </div>
     </main>
 
     <script is:inline>
-      if (window.location.pathname.indexOf("/zh-tw") === 0) {
+      if (/\/zh-tw(\/|$)/.test(window.location.pathname)) {
         document.getElementById("copy-en")?.setAttribute("hidden", "");
         document.getElementById("copy-zh-tw")?.removeAttribute("hidden");
       }

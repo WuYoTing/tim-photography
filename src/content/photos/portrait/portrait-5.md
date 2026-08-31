@@ -1,14 +1,13 @@
 ---
 title:
-  en: "Studio Portrait II"
-  zh-TW: "棚拍人像 II"
+  en: "Guitarist, Late Set"
+  zh-TW: "深夜場次的吉他手"
 slug: "portrait-5"
 category: "portrait"
-image: "../../../assets/photos/portrait/portrait-5.jpg"
+image: "../../../assets/photos/portrait/DSC03424.jpg"
 alt:
-  en: "Placeholder portrait photo 5, to be replaced with a real photograph"
-  zh-TW: "佔位人像照片 5,待替換為真實作品"
+  en: "A woman with a bob haircut playing an acoustic guitar in front of a wall of vinyl records"
+  zh-TW: "短髮女子在滿牆黑膠前彈奏木吉他"
 featured: false
-date: 2026-08-04
 order: 5
 ---

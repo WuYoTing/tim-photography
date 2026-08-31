@@ -1,14 +1,13 @@
 ---
 title:
-  en: "Dadaocheng Fireworks — Slow Sync I"
-  zh-TW: "大稻埕煙火 — 慢速同步 I"
+  en: "Upright Bass, Brick Wall"
+  zh-TW: "磚牆前的低音大提琴"
 slug: "portrait-1"
 category: "portrait"
-image: "../../../assets/photos/portrait/portrait-1.jpg"
+image: "../../../assets/photos/portrait/DSC03427.jpg"
 alt:
-  en: "Placeholder portrait photo 1, to be replaced with a real photograph"
-  zh-TW: "佔位人像照片 1,待替換為真實作品"
+  en: "A woman playing an upright double bass in front of two acoustic guitars mounted on a brick wall"
+  zh-TW: "女子演奏低音大提琴,身後磚牆掛著兩把木吉他"
 featured: true
-date: 2026-08-01
 order: 1
 ---

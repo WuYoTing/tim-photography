@@ -1,18 +1,14 @@
 export const siteConfig = {
   name: "Wu You Ting",
   tagline: {
-    en: "Portrait Photographer",
-    "zh-TW": "人像攝影師",
+    en: "Photographer",
+    "zh-TW": "攝影師",
   },
   location: "Taipei, Taiwan",
-  siteUrl: "https://wuyoting.github.io",
+  siteUrl: "https://wuyoting.github.io/tim-photography",
   social: {
     instagram: "https://www.instagram.com/hakosaki.stage/",
     linkedin: "https://www.linkedin.com/in/youtingwu/",
   },
-  contactFormEndpoint: "",
-  analytics: {
-    umamiWebsiteId: "",
-    umamiScriptUrl: "https://cloud.umami.is/script.js",
-  },
+  contactFormEndpoint: "https://formspree.io/f/xvkozdel",
 };

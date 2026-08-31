@@ -16,8 +16,7 @@
     "toggleToLight": "Switch to light mode"
   },
   "home": {
-    "heroSubtitle": "Slow Sync Flash",
-    "intro": "I'm a Taipei-based portrait photographer with a focus on slow sync flash technique — long exposures, layered light, and a sense of motion frozen in a single frame.",
+    "intro": "I'm a photographer based in Taipei, Taiwan. Here are some moments from recent travels.",
     "learnMore": "Learn more about me",
     "featuredHeading": "Featured Work"
   },
@@ -29,10 +28,10 @@
   "about": {
     "heading": "About",
     "gearHeading": "Gear I shoot with",
-    "gearText": "I usually shoot with a Sony A7M3 paired with a Tamron 28-200mm or a Sony 85mm F1.8, with a YN560II off-camera flash for slow sync work.",
-    "bioParagraph1": "I'm Wu You Ting, a portrait photographer based in Taipei, Taiwan. My work centers on slow sync flash — long shutter speeds paired with off-camera flash to blend ambient light and motion into a single portrait.",
-    "bioParagraph2": "One series close to my heart is shot during Dadaocheng's fireworks festival, where I pair portraits with the fireworks overhead using shutter speeds of 1–4 seconds, apertures around f/8–f/11, and rear-curtain sync.",
-    "bioParagraph3": "If you're looking for a portrait session with a bit of drama and motion, I'd love to hear from you."
+    "gearText": "I usually shoot with a Sony A7M3 paired with a Tamron 28-200mm or a Sony 85mm F1.8.",
+    "bioParagraph1": "I'm Wu You Ting, a photographer based in Taipei, Taiwan.",
+    "bioParagraph2": "I like capturing the moments I come across, especially while traveling — a look, a gesture, a bit of light in an unfamiliar place.",
+    "bioParagraph3": "If you'd like to work together, I'd love to hear from you."
   },
   "contact": {
     "heading": "Contact",

@@ -52,11 +52,12 @@ export function stripLocalePrefix(pathname: string): string {
   return pathname;
 }
 
-/** Builds the equivalent path for the given locale from a locale-agnostic path (e.g. "/portfolio"). */
+/** Builds the equivalent path for the given locale from a locale-agnostic path (e.g. "/portfolio"), prefixed with the site's configured base path. */
 export function getLocalizedPath(path: string, locale: Locale): string {
+  const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   const cleanPath = path === "/" ? "" : path;
-  if (locale === defaultLocale) return cleanPath || "/";
-  return `/zh-tw${cleanPath}`;
+  const localePath = locale === defaultLocale ? cleanPath : `/zh-tw${cleanPath}`;
+  return `${base}${localePath || "/"}`;
 }
 
 /** Picks the string matching the current locale out of a { en, "zh-TW": ... } localized object. */

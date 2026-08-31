@@ -1,6 +1,6 @@
 # WuYouTing Photography
 
-Wu You Ting 的個人攝影作品集網站。使用 [Astro](https://astro.build) 建置,部署到 GitHub Pages(`https://wuyoting.github.io`)。
+Wu You Ting 的個人攝影作品集網站。使用 [Astro](https://astro.build) 建置,部署到 GitHub Pages(`https://wuyoting.github.io/tim-photography`)。
 
 ## 本機開發
 
@@ -15,7 +15,7 @@ npm run preview   # 預覽 build 產出
 
 ## 新增一張作品
 
-1. 把圖片放到 `src/assets/photos/<category>/<slug>.jpg`(`category` 目前是 `portrait` / `event` / `still`)
+1. 把圖片放到 `src/assets/photos/<category>/<slug>.jpg`(`category` 目前是 `travel` / `event` / `still`)
 2. 在 `src/content/photos/<category>/<slug>.md` 新增一個檔案,frontmatter 範例:
 
    ```yaml
@@ -24,8 +24,8 @@ npm run preview   # 預覽 build 產出
      en: "Photo title"
      zh-TW: "作品標題"
    slug: "unique-slug"
-   category: "portrait"
-   image: "../../../assets/photos/portrait/<slug>.jpg"
+   category: "travel"
+   image: "../../../assets/photos/travel/<slug>.jpg"
    alt:
      en: "Descriptive alt text"
      zh-TW: "無障礙替代文字"
@@ -52,19 +52,13 @@ npm run preview   # 預覽 build 產出
 2. 把 endpoint 填入 `src/config/site.ts` 的 `contactFormEndpoint`。
 3. Contact 頁的表單會用 `fetch` 以 AJAX 方式送出,並在頁面上顯示成功/失敗訊息,不會整頁跳轉到 Formspree 網域。
 
-## 網站分析(Umami)
-
-1. 到 [Umami Cloud](https://cloud.umami.is) 或自架 Umami,建立一個網站並取得 Website ID。
-2. 把 Website ID 填入 `src/config/site.ts` 的 `analytics.umamiWebsiteId`。若是自架版本,把 `analytics.umamiScriptUrl` 改成自架的 script 網址。
-
 ## 未來綁自訂網域
 
 1. 在這個 repo 的 GitHub Pages 設定裡填入自訂網域(例如 `wuyoutingphoto.com`),GitHub 會自動在 repo 根目錄產生 `CNAME` 檔案(內容就是那個網域)。
 2. 到網域註冊商設定 DNS:根網域用 `A` record 指到 GitHub Pages 的 IP,或用 `CNAME` record 指到 `wuyoting.github.io`(依 GitHub Pages 官方文件的最新 IP/設定為準)。
-3. 更新 `astro.config.mjs` 的 `site` 欄位與 `src/config/site.ts` 的 `siteUrl` 為新網域,兩者都改完再重新部署。
+3. 更新 `astro.config.mjs` 的 `site` 欄位與 `src/config/site.ts` 的 `siteUrl` 為新網域;自訂網域是根網域部署,記得把 `astro.config.mjs` 的 `base: "/tim-photography"` 移除,三處都改完再重新部署。
 
 ## 已知限制
 
 - **圖片保護**:作品集圖片停用了右鍵選單與拖曳另存,但這只是基本防護,不是絕對防盜用機制(瀏覽器開發工具、螢幕截圖等仍能取得圖片)。
-- **佔位圖片**:目前 `src/assets/photos/portrait/` 底下是本機產生的純色佔位圖,交付前需替換成真實作品(替換方式同上「新增一張作品」,直接覆蓋同名圖檔或改 frontmatter 的 `image` 路徑)。
 - 未使用 Tailwind CSS,樣式一律用原生 CSS + CSS variables(見 `src/styles/global.css`)。
