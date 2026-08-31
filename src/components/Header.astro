@@ -1,0 +1,282 @@
+---
+import { siteConfig } from "../config/site";
+import {
+  getLocalizedPath,
+  useTranslations,
+  type Locale,
+} from "../i18n/utils";
+
+interface Props {
+  locale: Locale;
+  path: string;
+}
+
+const { locale, path } = Astro.props;
+const t = useTranslations(locale);
+
+const navItems = [
+  { key: "home", href: "/" },
+  { key: "portfolio", href: "/portfolio" },
+  { key: "about", href: "/about" },
+  { key: "contact", href: "/contact" },
+];
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href={getLocalizedPath("/", locale)}>{siteConfig.name}</a>
+
+    <button
+      id="menu-toggle"
+      class="menu-toggle"
+      aria-expanded="false"
+      aria-controls="nav-panel"
+    >
+      <span class="visually-hidden">{t("nav.menuToggle")}</span>
+      <span class="menu-toggle-icon" aria-hidden="true"></span>
+    </button>
+
+    <div id="nav-panel" class="nav-panel">
+      <nav aria-label="Primary">
+        <ul class="nav-list">
+          {navItems.map((item) => (
+            <li>
+              <a
+                href={getLocalizedPath(item.href, locale)}
+                aria-current={path === item.href ? "page" : undefined}
+              >
+                {t(`nav.${item.key}`)}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="header-controls">
+        <details class="lang-switch">
+          <summary>{t(`language.${locale}`)}</summary>
+          <ul>
+            <li>
+              <a href={getLocalizedPath(path, "en")} lang="en">{t("language.en")}</a>
+            </li>
+            <li>
+              <a href={getLocalizedPath(path, "zh-tw")} lang="zh-TW">{t("language.zh-tw")}</a>
+            </li>
+          </ul>
+        </details>
+
+        <button id="theme-toggle" class="theme-toggle" type="button">
+          <span class="visually-hidden" id="theme-toggle-label">{t("theme.toggleToDark")}</span>
+          <svg class="icon-sun" aria-hidden="true" viewBox="0 0 24 24" width="20" height="20">
+            <circle cx="12" cy="12" r="4" fill="currentColor" />
+            <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" />
+            </g>
+          </svg>
+          <svg class="icon-moon" aria-hidden="true" viewBox="0 0 24 24" width="20" height="20">
+            <path
+              d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const menuToggle = document.getElementById("menu-toggle");
+  const navPanel = document.getElementById("nav-panel");
+
+  menuToggle?.addEventListener("click", () => {
+    const isOpen = navPanel?.classList.toggle("is-open");
+    menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  });
+
+  const themeToggle = document.getElementById("theme-toggle");
+  const themeToggleLabel = document.getElementById("theme-toggle-label");
+  const toDarkText = themeToggleLabel?.textContent ?? "Switch to dark mode";
+
+  function syncThemeToggleLabel() {
+    const current = document.documentElement.getAttribute("data-theme");
+    if (themeToggleLabel) {
+      themeToggleLabel.textContent = current === "dark" ? "Switch to light mode" : toDarkText;
+    }
+    themeToggle?.setAttribute(
+      "aria-pressed",
+      current === "dark" ? "true" : "false"
+    );
+  }
+  syncThemeToggleLabel();
+
+  themeToggle?.addEventListener("click", () => {
+    const current = document.documentElement.getAttribute("data-theme");
+    const next = current === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    localStorage.setItem("theme", next);
+    syncThemeToggleLabel();
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: var(--space-2);
+  }
+
+  .logo {
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .menu-toggle-icon,
+  .menu-toggle-icon::before,
+  .menu-toggle-icon::after {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--color-text);
+    position: relative;
+  }
+
+  .menu-toggle-icon::before {
+    content: "";
+    position: absolute;
+    top: -7px;
+  }
+
+  .menu-toggle-icon::after {
+    content: "";
+    position: absolute;
+    top: 7px;
+  }
+
+  .nav-panel {
+    display: none;
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-2);
+  }
+
+  .nav-panel.is-open {
+    display: block;
+  }
+
+  .nav-list {
+    list-style: none;
+    margin: 0 0 var(--space-2);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .nav-list a {
+    display: block;
+    padding: var(--space-1) 0;
+  }
+
+  .nav-list a[aria-current="page"] {
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  .header-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .lang-switch summary {
+    cursor: pointer;
+    list-style: none;
+    padding: var(--space-1) 0;
+  }
+
+  .lang-switch summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .lang-switch ul {
+    list-style: none;
+    margin: var(--space-1) 0 0;
+    padding: 0;
+  }
+
+  .lang-switch a {
+    display: block;
+    padding: var(--space-1) 0;
+  }
+
+  .theme-toggle {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .icon-moon {
+    display: none;
+  }
+
+  :global([data-theme="dark"]) .icon-sun {
+    display: none;
+  }
+
+  :global([data-theme="dark"]) .icon-moon {
+    display: block;
+  }
+
+  @media (min-width: 768px) {
+    .menu-toggle {
+      display: none;
+    }
+
+    .nav-panel {
+      display: flex;
+      position: static;
+      border-bottom: none;
+      padding: 0;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .nav-list {
+      flex-direction: row;
+      margin: 0;
+      gap: var(--space-3);
+    }
+  }
+</style>

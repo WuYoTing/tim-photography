@@ -1,0 +1,12 @@
+---
+import CategoryPage from "../../page-components/CategoryPage.astro";
+import { categories } from "../../config/categories";
+
+export function getStaticPaths() {
+  return categories.map((category) => ({ params: { slug: category.slug } }));
+}
+
+const { slug } = Astro.params;
+---
+
+<CategoryPage locale="en" categorySlug={slug as string} />

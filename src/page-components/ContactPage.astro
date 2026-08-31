@@ -1,0 +1,179 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../config/site";
+import { useTranslations, type Locale } from "../i18n/utils";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const titleByLocale: Record<Locale, string> = {
+  en: "Contact — Wu You Ting Photography",
+  "zh-tw": "聯絡方式 — Wu You Ting Photography",
+};
+const descriptionByLocale: Record<Locale, string> = {
+  en: "Get in touch with Wu You Ting for portrait photography bookings and collaborations.",
+  "zh-tw": "與吳有廷聯繫,洽詢人像攝影拍攝合作與邀約。",
+};
+---
+
+<BaseLayout
+  title={titleByLocale[locale]}
+  description={descriptionByLocale[locale]}
+  locale={locale}
+  path="/contact"
+>
+  <section class="container contact-page">
+    <h1>{t("contact.heading")}</h1>
+    <p class="contact-intro">{t("contact.intro")}</p>
+
+    <form
+      id="contact-form"
+      class="contact-form"
+      data-endpoint={siteConfig.contactFormEndpoint}
+    >
+      <label for="contact-name">{t("contact.name")}</label>
+      <input id="contact-name" name="name" type="text" required />
+
+      <label for="contact-email">{t("contact.email")}</label>
+      <input id="contact-email" name="email" type="email" required />
+
+      <label for="contact-message">{t("contact.message")}</label>
+      <textarea id="contact-message" name="message" rows="5" required></textarea>
+
+      <button type="submit" id="contact-submit">{t("contact.submit")}</button>
+
+      <p id="contact-status" role="status" aria-live="polite"></p>
+    </form>
+
+    <p class="social-fallback">
+      {t("contact.socialFallback")}
+      <a href={siteConfig.social.instagram} target="_blank" rel="noopener noreferrer">
+        Instagram
+      </a>
+    </p>
+  </section>
+</BaseLayout>
+
+<script define:vars={{
+  sendingText: t("contact.sending"),
+  submitText: t("contact.submit"),
+  successText: t("contact.success"),
+  errorText: t("contact.error"),
+}}>
+  const form = document.getElementById("contact-form");
+  const submitBtn = document.getElementById("contact-submit");
+  const status = document.getElementById("contact-status");
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const endpoint = form.dataset.endpoint;
+    if (!endpoint) {
+      if (status) {
+        status.textContent = errorText;
+        status.dataset.state = "error";
+      }
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = sendingText;
+    if (status) status.textContent = "";
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: new FormData(form),
+      });
+
+      if (response.ok) {
+        if (status) {
+          status.textContent = successText;
+          status.dataset.state = "success";
+        }
+        form.reset();
+      } else {
+        throw new Error("Form submission failed");
+      }
+    } catch {
+      if (status) {
+        status.textContent = errorText;
+        status.dataset.state = "error";
+      }
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitText;
+    }
+  });
+</script>
+
+<style>
+  .contact-page {
+    max-width: 560px;
+    padding-block: var(--space-4) var(--space-6);
+  }
+
+  .contact-intro {
+    color: var(--color-text-muted);
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin-top: var(--space-3);
+  }
+
+  .contact-form label {
+    font-weight: 600;
+    margin-top: var(--space-2);
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: var(--space-1);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background: var(--color-bg-elevated);
+    color: var(--color-text);
+    font: inherit;
+  }
+
+  .contact-form button {
+    margin-top: var(--space-3);
+    padding: var(--space-1) var(--space-3);
+    min-height: 44px;
+    border: none;
+    border-radius: 4px;
+    background: var(--color-text);
+    color: var(--color-bg);
+    cursor: pointer;
+    align-self: flex-start;
+  }
+
+  .contact-form button:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  #contact-status[data-state="error"] {
+    color: var(--color-error);
+  }
+
+  #contact-status[data-state="success"] {
+    color: var(--color-success);
+  }
+
+  .social-fallback {
+    margin-top: var(--space-4);
+    color: var(--color-text-muted);
+  }
+
+  .social-fallback a {
+    text-decoration: underline;
+  }
+</style>

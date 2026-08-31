@@ -1,0 +1,168 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import { getLocalizedPath, pickLocalized, type Locale } from "../i18n/utils";
+import { getCategory } from "../config/categories";
+
+interface Props {
+  photos: CollectionEntry<"photos">[];
+  locale: Locale;
+  mode: "feature-link" | "lightbox";
+  lightboxGroup?: string;
+}
+
+const { photos, locale, mode, lightboxGroup = "gallery" } = Astro.props;
+---
+
+<div data-lightbox-group={mode === "lightbox" ? lightboxGroup : undefined}>
+<ul class:list={["photo-grid", `photo-grid--${mode}`]}>
+  {photos.map((photo, index) => {
+    const title = pickLocalized(photo.data.title, locale);
+    const alt = pickLocalized(photo.data.alt, locale);
+    const category = getCategory(photo.data.category);
+
+    return (
+      <li class="photo-grid-item">
+        {mode === "feature-link" ? (
+          <a
+            class="photo-link"
+            href={getLocalizedPath(`/portfolio/${photo.data.category}`, locale)}
+          >
+            <Image
+              class="protected-image"
+              src={photo.data.image}
+              alt={alt}
+              widths={[800, 1600]}
+              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+              loading="lazy"
+            />
+            {category && (
+              <span class="photo-overlay-label">
+                {pickLocalized(category.label, locale)}
+              </span>
+            )}
+          </a>
+        ) : (
+          <button
+            type="button"
+            class="photo-lightbox-trigger"
+            data-lightbox-group={lightboxGroup}
+            data-lightbox-index={index}
+            data-title={title}
+          >
+            <Image
+              class="protected-image"
+              src={photo.data.image}
+              alt={alt}
+              widths={[800, 1600]}
+              sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 100vw"
+              loading="lazy"
+            />
+          </button>
+        )}
+      </li>
+    );
+  })}
+</ul>
+
+{mode === "lightbox" && (
+  <div class="lightbox-source-data" hidden>
+    {photos.map((photo) => (
+      <Image
+        class="lightbox-full-image"
+        src={photo.data.image}
+        alt=""
+        width={1600}
+        loading="lazy"
+      />
+    ))}
+  </div>
+)}
+</div>
+
+<style>
+  .photo-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+
+  .photo-grid-item {
+    position: relative;
+  }
+
+  .photo-link,
+  .photo-lightbox-trigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .photo-link img,
+  .photo-lightbox-trigger img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+  }
+
+  .photo-overlay-label {
+    position: absolute;
+    inset: auto var(--space-2) var(--space-2) var(--space-2);
+    color: #fff;
+    font-size: 0.85rem;
+    opacity: 1;
+  }
+
+  @media (min-width: 430px) {
+    .photo-grid--feature-link,
+    .photo-grid--lightbox {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .photo-grid--feature-link,
+    .photo-grid--lightbox {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .photo-overlay-label {
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+
+    .photo-link:hover .photo-overlay-label,
+    .photo-link:focus-visible .photo-overlay-label {
+      opacity: 1;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .photo-grid--feature-link {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .photo-grid--lightbox {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
+
+<script>
+  function preventContextMenu(e: Event) {
+    e.preventDefault();
+  }
+
+  document.querySelectorAll<HTMLImageElement>(".protected-image").forEach((img) => {
+    img.addEventListener("contextmenu", preventContextMenu);
+    img.addEventListener("dragstart", preventContextMenu);
+  });
+</script>

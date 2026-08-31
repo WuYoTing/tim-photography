@@ -1,0 +1,64 @@
+{
+  "nav": {
+    "home": "首頁",
+    "portfolio": "作品集",
+    "about": "關於我",
+    "contact": "聯絡方式",
+    "menuToggle": "切換選單"
+  },
+  "language": {
+    "label": "語言",
+    "en": "English",
+    "zh-tw": "繁體中文"
+  },
+  "theme": {
+    "toggleToDark": "切換為深色模式",
+    "toggleToLight": "切換為淺色模式"
+  },
+  "home": {
+    "heroSubtitle": "慢速同步閃燈",
+    "intro": "我是吳有廷,一位在台北拍攝人像的攝影師,擅長慢速同步閃燈技法——用長曝光與層疊光線,把流動的瞬間定格在一張照片裡。",
+    "learnMore": "進一步了解我",
+    "featuredHeading": "精選作品"
+  },
+  "portfolio": {
+    "heading": "作品集",
+    "filterAll": "全部",
+    "comingSoon": "敬請期待,內容陸續更新中。"
+  },
+  "about": {
+    "heading": "關於我",
+    "gearHeading": "拍攝工具",
+    "gearText": "我慣用 Sony A7M3 搭配 Tamron 28-200mm 或 Sony 85mm F1.8 定焦鏡拍攝人像特寫,慢速同步閃燈則搭配 YN560II 離機閃燈完成。",
+    "bioParagraph1": "我是吳有廷,一位在台灣台北拍攝人像的攝影師。我的拍攝核心是慢速同步閃燈——用長曝光搭配離機閃燈,把環境光與流動的瞬間一起收進同一張人像裡。",
+    "bioParagraph2": "其中我特別喜歡的一個系列,是在大稻埕煙火節拍攝的人像作品,快門 1 到 4 秒、光圈約 f/8 到 f/11,搭配後簾同步,把人像和頭頂的煙火疊在同一格畫面裡。",
+    "bioParagraph3": "如果你也想要一場帶點戲劇感與動態的人像拍攝,歡迎與我聯絡。"
+  },
+  "contact": {
+    "heading": "聯絡方式",
+    "intro": "有拍攝合作邀約歡迎聯絡。",
+    "name": "姓名",
+    "email": "Email",
+    "message": "訊息內容",
+    "submit": "送出訊息",
+    "sending": "傳送中...",
+    "success": "訊息已送出,我會盡快回覆您。",
+    "error": "訊息傳送時發生問題,請稍後再試,或直接透過 Instagram 聯絡我。",
+    "socialFallback": "您也可以直接透過以下方式聯絡我"
+  },
+  "notFound": {
+    "heading": "找不到這個頁面",
+    "text": "您要找的頁面不存在。",
+    "backHome": "回首頁",
+    "backPortfolio": "瀏覽作品集"
+  },
+  "lightbox": {
+    "close": "關閉",
+    "next": "下一張",
+    "prev": "上一張"
+  },
+  "footer": {
+    "copyright": "© {year} Wu You Ting",
+    "contactLink": "聯絡我"
+  }
+}

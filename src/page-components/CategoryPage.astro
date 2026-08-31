@@ -1,0 +1,106 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PhotoGrid from "../components/PhotoGrid.astro";
+import Lightbox from "../components/Lightbox.astro";
+import { getCategory, categories } from "../config/categories";
+import {
+  useTranslations,
+  pickLocalized,
+  getLocalizedPath,
+  type Locale,
+} from "../i18n/utils";
+import { getOgImagePath } from "../utils/og-image";
+
+interface Props {
+  locale: Locale;
+  categorySlug: string;
+}
+
+const { locale, categorySlug } = Astro.props;
+const t = useTranslations(locale);
+const category = getCategory(categorySlug);
+
+if (!category) {
+  throw new Error(`Unknown category slug: ${categorySlug}`);
+}
+
+const photos = (await getCollection("photos", (p) => p.data.category === categorySlug)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const ogImage = photos[0] ? await getOgImagePath(photos[0].data.image) : undefined;
+
+const categoryLabel = pickLocalized(category.label, locale);
+const title = `${categoryLabel} — Wu You Ting Photography`;
+const description = pickLocalized(category.description, locale);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  path={`/portfolio/${categorySlug}`}
+  ogImage={ogImage}
+>
+  <section class="container portfolio-page">
+    <h1>{categoryLabel}</h1>
+    {description && <p class="category-description">{description}</p>}
+
+    <nav class="category-tabs" aria-label={t("portfolio.heading")}>
+      <a class="tab" href={getLocalizedPath("/portfolio", locale)}>
+        {t("portfolio.filterAll")}
+      </a>
+      {categories.map((c) => (
+        <a
+          class:list={["tab", { "is-active": c.slug === categorySlug }]}
+          href={getLocalizedPath(`/portfolio/${c.slug}`, locale)}
+        >
+          {pickLocalized(c.label, locale)}
+        </a>
+      ))}
+    </nav>
+
+    {photos.length > 0 ? (
+      <PhotoGrid photos={photos} locale={locale} mode="lightbox" lightboxGroup={`category-${categorySlug}`} />
+    ) : (
+      <p class="empty-state">{t("portfolio.comingSoon")}</p>
+    )}
+  </section>
+
+  <Lightbox locale={locale} />
+</BaseLayout>
+
+<style>
+  .portfolio-page {
+    padding-block: var(--space-4) var(--space-6);
+  }
+
+  .category-description {
+    color: var(--color-text-muted);
+    max-width: 640px;
+  }
+
+  .category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-block: var(--space-2) var(--space-3);
+  }
+
+  .tab {
+    padding: var(--space-1) var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+  }
+
+  .tab.is-active {
+    background: var(--color-text);
+    color: var(--color-bg);
+    border-color: var(--color-text);
+  }
+
+  .empty-state {
+    color: var(--color-text-muted);
+    padding-block: var(--space-4);
+  }
+</style>

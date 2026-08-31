@@ -1,0 +1,97 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PhotoGrid from "../components/PhotoGrid.astro";
+import Lightbox from "../components/Lightbox.astro";
+import { categories } from "../config/categories";
+import {
+  useTranslations,
+  pickLocalized,
+  getLocalizedPath,
+  type Locale,
+} from "../i18n/utils";
+import { getOgImagePath } from "../utils/og-image";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const allPhotos = (await getCollection("photos")).sort((a, b) => a.data.order - b.data.order);
+const ogImage = allPhotos[0] ? await getOgImagePath(allPhotos[0].data.image) : undefined;
+
+const titleByLocale: Record<Locale, string> = {
+  en: "Portfolio — Wu You Ting Photography",
+  "zh-tw": "作品集 — Wu You Ting Photography",
+};
+const descriptionByLocale: Record<Locale, string> = {
+  en: "Browse the full photography portfolio by category: portrait, event and still.",
+  "zh-tw": "依分類瀏覽完整攝影作品集:人像、活動紀實與劇照。",
+};
+---
+
+<BaseLayout
+  title={titleByLocale[locale]}
+  description={descriptionByLocale[locale]}
+  locale={locale}
+  path="/portfolio"
+  ogImage={ogImage}
+>
+  <section class="container portfolio-page">
+    <h1>{t("portfolio.heading")}</h1>
+
+    <nav class="category-tabs" aria-label={t("portfolio.heading")}>
+      <a class="tab is-active" href={getLocalizedPath("/portfolio", locale)}>
+        {t("portfolio.filterAll")}
+      </a>
+      {categories.map((category) => (
+        <a
+          class="tab"
+          href={getLocalizedPath(`/portfolio/${category.slug}`, locale)}
+        >
+          {pickLocalized(category.label, locale)}
+        </a>
+      ))}
+    </nav>
+
+    {allPhotos.length > 0 ? (
+      <PhotoGrid photos={allPhotos} locale={locale} mode="lightbox" lightboxGroup="portfolio-all" />
+    ) : (
+      <p class="empty-state">{t("portfolio.comingSoon")}</p>
+    )}
+  </section>
+
+  <Lightbox locale={locale} />
+</BaseLayout>
+
+<style>
+  .portfolio-page {
+    padding-block: var(--space-4) var(--space-6);
+  }
+
+  .category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-block: var(--space-2) var(--space-3);
+  }
+
+  .tab {
+    padding: var(--space-1) var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+  }
+
+  .tab.is-active {
+    background: var(--color-text);
+    color: var(--color-bg);
+    border-color: var(--color-text);
+  }
+
+  .empty-state {
+    color: var(--color-text-muted);
+    padding-block: var(--space-4);
+  }
+</style>

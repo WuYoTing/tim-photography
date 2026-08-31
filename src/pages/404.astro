@@ -1,0 +1,104 @@
+---
+import "../styles/global.css";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import { siteConfig } from "../config/site";
+import en from "../i18n/en.json";
+import zhTw from "../i18n/zh-tw.json";
+
+const allPhotos = (await getCollection("photos")).sort((a, b) => a.data.order - b.data.order);
+const photo = allPhotos.find((p) => p.data.featured) ?? allPhotos[0];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>404 — {siteConfig.name}</title>
+    <meta name="description" content="Page not found." />
+    <script is:inline>
+      (function () {
+        var stored = localStorage.getItem("theme");
+        var theme =
+          stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+
+        if (window.location.pathname.indexOf("/zh-tw") === 0) {
+          document.documentElement.lang = "zh-TW";
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <main class="not-found">
+      {photo && (
+        <Image
+          class="not-found-image"
+          src={photo.data.image}
+          alt=""
+          width={800}
+          height={1067}
+          loading="eager"
+        />
+      )}
+
+      <div class="not-found-copy" lang="en" id="copy-en">
+        <h1>{en.notFound.heading}</h1>
+        <p>{en.notFound.text}</p>
+        <div class="not-found-actions">
+          <a href="/">{en.notFound.backHome}</a>
+          <a href="/portfolio">{en.notFound.backPortfolio}</a>
+        </div>
+      </div>
+
+      <div class="not-found-copy" lang="zh-TW" id="copy-zh-tw" hidden>
+        <h1>{zhTw.notFound.heading}</h1>
+        <p>{zhTw.notFound.text}</p>
+        <div class="not-found-actions">
+          <a href="/zh-tw/">{zhTw.notFound.backHome}</a>
+          <a href="/zh-tw/portfolio">{zhTw.notFound.backPortfolio}</a>
+        </div>
+      </div>
+    </main>
+
+    <script is:inline>
+      if (window.location.pathname.indexOf("/zh-tw") === 0) {
+        document.getElementById("copy-en")?.setAttribute("hidden", "");
+        document.getElementById("copy-zh-tw")?.removeAttribute("hidden");
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  .not-found {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-3);
+    gap: var(--space-3);
+  }
+
+  .not-found-image {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    border-radius: 4px;
+  }
+
+  .not-found-actions {
+    display: flex;
+    gap: var(--space-3);
+    justify-content: center;
+    margin-top: var(--space-2);
+  }
+
+  .not-found-actions a {
+    text-decoration: underline;
+  }
+</style>
