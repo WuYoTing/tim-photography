@@ -1,9 +1,9 @@
 ---
-import { getCollection } from "astro:content";
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { useTranslations, pickLocalized, type Locale } from "../i18n/utils";
+import { useTranslations, type Locale } from "../i18n/utils";
 import { getOgImagePath } from "../utils/og-image";
+import profileImage from "../assets/profile.jpg";
 
 interface Props {
   locale: Locale;
@@ -12,9 +12,7 @@ interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 
-const allPhotos = (await getCollection("photos")).sort((a, b) => a.data.order - b.data.order);
-const portrait = allPhotos.find((p) => p.data.featured) ?? allPhotos[0];
-const ogImage = portrait ? await getOgImagePath(portrait.data.image) : undefined;
+const ogImage = await getOgImagePath(profileImage);
 
 const titleByLocale: Record<Locale, string> = {
   en: "About — Wu You Ting Photography",
@@ -37,16 +35,15 @@ const descriptionByLocale: Record<Locale, string> = {
     <h1>{t("about.heading")}</h1>
 
     <div class="about-layout">
-      {portrait && (
-        <Image
-          class="about-portrait protected-image"
-          src={portrait.data.image}
-          alt={pickLocalized(portrait.data.alt, locale)}
-          width={800}
-          height={1067}
-          loading="eager"
-        />
-      )}
+      <Picture
+        class="about-portrait protected-image"
+        src={profileImage}
+        alt={t("about.portraitAlt")}
+        formats={["avif", "webp"]}
+        width={800}
+        height={1067}
+        loading="eager"
+      />
 
       <div class="about-copy">
         <p>{t("about.bioParagraph1")}</p>

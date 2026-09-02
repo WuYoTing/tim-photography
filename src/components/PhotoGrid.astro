@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { Image } from "astro:assets";
+import { Image, Picture } from "astro:assets";
 import { getLocalizedPath, pickLocalized, type Locale } from "../i18n/utils";
 import { getCategory } from "../config/categories";
 
@@ -28,10 +28,11 @@ const { photos, locale, mode, lightboxGroup = "gallery" } = Astro.props;
             class="photo-link"
             href={getLocalizedPath(`/portfolio/${photo.data.category}`, locale)}
           >
-            <Image
+            <Picture
               class="protected-image"
               src={photo.data.image}
               alt={alt}
+              formats={["avif", "webp"]}
               widths={[800, 1600]}
               sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
               loading="lazy"
@@ -46,14 +47,14 @@ const { photos, locale, mode, lightboxGroup = "gallery" } = Astro.props;
           <button
             type="button"
             class="photo-lightbox-trigger"
-            data-lightbox-group={lightboxGroup}
             data-lightbox-index={index}
             data-title={title}
           >
-            <Image
+            <Picture
               class="protected-image"
               src={photo.data.image}
               alt={alt}
+              formats={["avif", "webp"]}
               widths={[800, 1600]}
               sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 100vw"
               loading="lazy"
@@ -73,6 +74,7 @@ const { photos, locale, mode, lightboxGroup = "gallery" } = Astro.props;
         src={photo.data.image}
         alt=""
         width={1600}
+        format="avif"
         loading="lazy"
       />
     ))}
